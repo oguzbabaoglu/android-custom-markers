@@ -18,6 +18,7 @@ package com.oguzbabaoglu.fancymarkers;
 
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
 
 /**
  * A simple Marker implementation with custom icon resources.
@@ -26,24 +27,24 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
  */
 public class IconMarker extends CustomMarker {
 
+    private final LatLng position;
     private int selectedIcon;
     private int defaultIcon;
 
-    public IconMarker(int iconRes) {
+    public IconMarker(LatLng position, int iconRes) {
+
+        this.position = position;
         defaultIcon = iconRes;
     }
 
-    public IconMarker(int selectedRes, int unSelectedRes) {
+    public IconMarker(LatLng position, int iconRes, int selectedRes) {
+
+        this(position, iconRes);
         selectedIcon = selectedRes;
-        defaultIcon = unSelectedRes;
     }
 
     public void setSelectedIcon(int selectedRes) {
         selectedIcon = selectedRes;
-    }
-
-    public void setUnSelectedIcon(int unSelectedRes) {
-        defaultIcon = unSelectedRes;
     }
 
     @Override
@@ -59,5 +60,10 @@ public class IconMarker extends CustomMarker {
                         ? selectedIcon
                         : defaultIcon
         );
+    }
+
+    @Override
+    public LatLng getPosition() {
+        return position;
     }
 }

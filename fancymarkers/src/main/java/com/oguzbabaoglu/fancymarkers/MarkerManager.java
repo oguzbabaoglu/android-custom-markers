@@ -21,6 +21,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -132,11 +133,23 @@ public class MarkerManager<T extends CustomMarker> implements
      */
     public void addMarker(T marker) {
 
+        final MarkerOptions markerOptions = new MarkerOptions();
         marker.setMarkerManager(this);
-        MarkerOptions markerOptions = new MarkerOptions();
-        marker.onPrepareMarker(markerOptions);
+        marker.prepareMarker(markerOptions);
 
         markerCache.put(marker, googleMap.addMarker(markerOptions));
+    }
+
+    /**
+     * Add all markers to the map.
+     *
+     * @param markers markers to add
+     */
+    public void addMarkers(List<T> markers) {
+
+        for (T marker : markers) {
+            addMarker(marker);
+        }
     }
 
     /**

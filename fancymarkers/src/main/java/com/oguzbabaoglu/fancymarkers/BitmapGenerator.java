@@ -41,6 +41,7 @@ public final class BitmapGenerator {
      */
     public static BitmapDescriptor fromView(View view) {
 
+        // TODO: Single views have trouble with measure.
         final int spec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
         view.measure(spec, spec);
 

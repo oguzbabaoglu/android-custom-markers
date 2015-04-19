@@ -14,28 +14,23 @@
  * limitations under the License.
  */
 
-apply plugin: 'com.android.application'
+package com.oguzbabaoglu.fancymarkers.examples;
 
-android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.LatLng;
+import com.oguzbabaoglu.fancymarkers.CustomMarker;
 
-    defaultConfig {
-        applicationId "com.oguzbabaoglu.fancymarkers.examples"
-        minSdkVersion 14
-        targetSdkVersion 22
-        versionCode 1
-        versionName "1.0"
+/**
+ * @author Oguz Babaoglu
+ */
+public class NetworkMarker extends CustomMarker {
+    @Override
+    public BitmapDescriptor getBitmapDescriptor() {
+        return null;
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-}
 
-dependencies {
-    compile 'com.android.support:appcompat-v7:22.0.0'
-    compile project(':fancymarkers')
+    @Override
+    public LatLng getPosition() {
+        return null;
+    }
 }

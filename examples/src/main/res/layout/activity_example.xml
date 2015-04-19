@@ -14,14 +14,37 @@
   ~ limitations under the License.
   -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:paddingTop="@dimen/activity_vertical_margin"
-                android:paddingBottom="@dimen/activity_vertical_margin"
-                tools:context=".ExampleActivity">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    >
 
-</RelativeLayout>
+    <FrameLayout
+        android:id="@+id/map_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <Button
+        style="@style/ExampleButton"
+        android:id="@+id/button_icon_markers"
+        android:text="@string/add_icon_markers"
+        />
+
+    <Button
+        style="@style/ExampleButton"
+        android:id="@+id/button_color_markers"
+        android:text="@string/add_color_markers"
+        />
+
+    <Button
+        style="@style/ExampleButton"
+        android:id="@+id/button_network_markers"
+        android:text="@string/add_network_markers"
+        />
+
+
+</LinearLayout>

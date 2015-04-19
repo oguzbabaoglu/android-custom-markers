@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright (C) 2015 Oguz Babaoglu
   ~
@@ -14,9 +15,15 @@
   ~ limitations under the License.
   -->
 
-<resources>
-    <string name="app_name">FancyMarkers</string>
-  <string name="add_icon_markers">Add Icon Markers</string>
-  <string name="add_color_markers">Add Color Markers</string>
-  <string name="add_network_markers">Add Network Markers</string>
-</resources>
+<com.oguzbabaoglu.fancymarkers.examples.CircleView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
+
+    <View
+        android:layout_width="@dimen/marker_size"
+        android:layout_height="@dimen/marker_size"
+        />
+
+</com.oguzbabaoglu.fancymarkers.examples.CircleView>

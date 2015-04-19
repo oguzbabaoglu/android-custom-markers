@@ -19,6 +19,7 @@ package com.oguzbabaoglu.fancymarkers;
 import android.support.annotation.Nullable;
 
 import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -81,6 +82,16 @@ public abstract class CustomMarker {
     }
 
     /**
+     * Internal prepare method. Ensures all markers have a position.
+     *
+     * @param markerOptions marker options for the marker
+     */
+    void prepareMarker(MarkerOptions markerOptions) {
+        markerOptions.position(getPosition());
+        onPrepareMarker(markerOptions);
+    }
+
+    /**
      * Called before the marker is created. Set marker options for the marker here.
      *
      * @param markerOptions marker options for the marker
@@ -109,4 +120,11 @@ public abstract class CustomMarker {
      * @return Bitmap descriptor of icon.
      */
     public abstract BitmapDescriptor getBitmapDescriptor();
+
+    /**
+     * All markers need to supply location information.
+     *
+     * @return Location of marker.
+     */
+    public abstract LatLng getPosition();
 }
