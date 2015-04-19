@@ -1,1 +1,1 @@
-include ':fancymarkers'
+include ':fancymarkers', ':examples'

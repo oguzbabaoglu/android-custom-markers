@@ -14,24 +14,19 @@
  * limitations under the License.
  */
 
-apply plugin: 'com.android.library'
+package com.oguzbabaoglu.fancymarkers.examples;
 
-android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 
-    defaultConfig {
-        minSdkVersion 11
-        targetSdkVersion 22
-        versionCode 1
-        versionName "1.0"
+/**
+ * @author Oguz Babaoglu
+ */
+public class ExampleActivity extends ActionBarActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_example);
     }
-
-    lintOptions {
-        abortOnError false
-    }
-}
-
-dependencies {
-    compile 'com.google.android.gms:play-services-location:7.0.0'
 }
