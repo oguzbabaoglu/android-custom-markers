@@ -38,6 +38,11 @@ public abstract class CustomMarker {
      */
     @Nullable
     public Marker getMarker() {
+
+        if (markerManager == null) {
+            throw new IllegalStateException("getMarker() called before onAdd()!!");
+        }
+
         return markerManager.getMarker(this);
     }
 
@@ -72,6 +77,7 @@ public abstract class CustomMarker {
 
     /**
      * Updates the marker icon if it exists on the map.
+     * Should be called after {@link #onAdd()}.
      */
     public void updateView() {
         final Marker marker = getMarker();
@@ -98,6 +104,13 @@ public abstract class CustomMarker {
      */
     public void onPrepareMarker(MarkerOptions markerOptions) {
         markerOptions.icon(getBitmapDescriptor());
+    }
+
+    /**
+     * Called after the marker is created and added to map.
+     */
+    public void onAdd() {
+        // For rent.
     }
 
     /**

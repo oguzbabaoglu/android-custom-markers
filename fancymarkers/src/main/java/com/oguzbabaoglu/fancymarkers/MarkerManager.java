@@ -138,6 +138,8 @@ public class MarkerManager<T extends CustomMarker> implements
         marker.prepareMarker(markerOptions);
 
         markerCache.put(marker, googleMap.addMarker(markerOptions));
+
+        marker.onAdd();
     }
 
     /**

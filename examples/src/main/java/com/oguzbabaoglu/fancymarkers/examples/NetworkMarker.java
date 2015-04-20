@@ -16,21 +16,85 @@
 
 package com.oguzbabaoglu.fancymarkers.examples;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
+
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.LatLng;
+import com.oguzbabaoglu.fancymarkers.BitmapGenerator;
 import com.oguzbabaoglu.fancymarkers.CustomMarker;
 
 /**
  * @author Oguz Babaoglu
  */
-public class NetworkMarker extends CustomMarker {
+public class NetworkMarker extends CustomMarker implements ImageLoader.ImageListener {
+
+    private static final String URL = "http://lorempixel.com/200/200?seed=";
+    private static volatile int seed; // Bypass cache
+
+    private LatLng position;
+    private View view;
+    private ImageView markerImage;
+    private ImageView markerBackground;
+    private ImageLoader imageLoader;
+
+    public NetworkMarker(Context context, LatLng position, ImageLoader imageLoader) {
+        this.position = position;
+
+        view = LayoutInflater.from(context).inflate(R.layout.view_network_marker, null);
+        markerImage = (ImageView) view.findViewById(R.id.marker_image);
+        markerBackground = (ImageView) view.findViewById(R.id.marker_background);
+
+        this.imageLoader = imageLoader;
+    }
+
+    @Override
+    public void onAdd() {
+        imageLoader.get(URL + seed++, this);
+    }
+
     @Override
     public BitmapDescriptor getBitmapDescriptor() {
-        return null;
+        return BitmapGenerator.fromView(view);
     }
 
     @Override
     public LatLng getPosition() {
-        return null;
+        return position;
+    }
+
+    @Override
+    public boolean onStateChange(boolean selected) {
+
+        if (selected) {
+            markerBackground.setColorFilter(Color.RED, PorterDuff.Mode.MULTIPLY);
+
+        } else {
+            markerBackground.clearColorFilter();
+        }
+
+        return true;
+    }
+
+    @Override
+    public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+
+        final Bitmap bitmap = response.getBitmap();
+
+        // Set image and update view
+        markerImage.setImageBitmap(bitmap);
+        updateView();
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+        // Ignore
     }
 }

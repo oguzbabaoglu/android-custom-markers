@@ -16,11 +16,15 @@
 
 package com.oguzbabaoglu.fancymarkers.examples;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -47,6 +51,8 @@ public class ExampleActivity extends ActionBarActivity implements View.OnClickLi
             new LatLng(37.44175323, -119.08338699),
             new LatLng(35.36812138, -120.75986352)
     };
+
+    private static ImageLoader imageLoader;
 
     private MarkerManager<IconMarker> iconMarkerManager;
     private MarkerManager<ColorMarker> colorMarkerManager;
@@ -84,6 +90,13 @@ public class ExampleActivity extends ActionBarActivity implements View.OnClickLi
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(CENTER, ZOOM));
             }
         });
+
+        // Keep a static image loader instance.
+        if (imageLoader == null) {
+
+            final RequestQueue queue = Volley.newRequestQueue(this);
+            imageLoader = new ImageLoader(queue, new NoImageCache());
+        }
     }
 
     @Override
@@ -143,9 +156,32 @@ public class ExampleActivity extends ActionBarActivity implements View.OnClickLi
 
         final ArrayList<NetworkMarker> networkMarkers = new ArrayList<>(LOCATIONS.length);
 
+        for (LatLng location : LOCATIONS) {
+            networkMarkers.add(new NetworkMarker(this, location, imageLoader));
+        }
+
         return networkMarkers;
     }
 
+    /**
+     * Not interested in caching images.
+     */
+    private static class NoImageCache implements ImageLoader.ImageCache {
+
+        @Override
+        public Bitmap getBitmap(String url) {
+            return null;
+        }
+
+        @Override
+        public void putBitmap(String url, Bitmap bitmap) {
+            // Do nothing
+        }
+    }
+
+    /**
+     * Marker click listener that always returns true.
+     */
     private static class DisableClick<T extends CustomMarker>
             implements MarkerManager.OnMarkerClickListener<T> {
 
