@@ -21,20 +21,24 @@ apply plugin: 'maven'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-def USER = "";
-def KEY = "";
+def BIN_USER = "";
+def BIN_KEY = "";
+def OSS_USER = "";
+def OSS_PASS = "";
 def Properties properties = new Properties()
 try {
     properties.load(new FileInputStream('credential.properties'))
-    USER = properties['bintray.user'];
-    KEY = properties['bintray.apikey'];
+    BIN_USER = properties['bintray.user'];
+    BIN_KEY = properties['bintray.apikey'];
+    OSS_USER = properties['oss.user'];
+    OSS_PASS = properties['oss.password'];
 } catch (FileNotFoundException ignored) {
     println 'Failed to find file credential.properties. Maven deploy disabled'
 }
 
 bintray {
-    user = USER
-    key = KEY
+    user = BIN_USER
+    key = BIN_KEY
     configurations = ['archives']
     pkg {
         repo = 'maven'
@@ -44,6 +48,18 @@ bintray {
         issueTrackerUrl = POM_SCM_URL_ISSUES
         vcsUrl = POM_SCM_URL
         licenses = [POM_LICENSE]
+        publish = true
+        version {
+            name = POM_VERSION
+            gpg {
+                sign = true
+            }
+            mavenCentralSync {
+                sync = true
+                user = OSS_USER
+                password = OSS_PASS
+            }
+        }
     }
 }
 
