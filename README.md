@@ -1,3 +1,5 @@
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.oguzbabaoglu/fancymarkers/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.oguzbabaoglu/fancymarkers)
+
 FancyMarkers
 ============
 A utility library for adding custom markers to Android map.
